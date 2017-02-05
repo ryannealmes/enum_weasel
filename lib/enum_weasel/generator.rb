@@ -1,4 +1,3 @@
-
 module EnumWeasel
   class Generator
     def call
