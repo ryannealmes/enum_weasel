@@ -39,9 +39,10 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'sqlite3'
   spec.add_development_dependency 'guard-rspec'
   spec.add_development_dependency 'pry'
-  spec.add_development_dependency 'codeclimate-test-reporter'
   spec.add_development_dependency 'rubocop'
   spec.add_development_dependency 'rubocop-rspec'
+  spec.add_development_dependency 'simplecov'
+  spec.add_development_dependency 'codeclimate-test-reporter'
 
   spec.add_dependency 'activerecord', '>= 4.0.0'
 end

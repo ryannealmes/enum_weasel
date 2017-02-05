@@ -115,6 +115,7 @@ DEPENDENCIES
   rspec
   rubocop
   rubocop-rspec
+  simplecov
   sqlite3
 
 BUNDLED WITH
