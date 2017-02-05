@@ -7,6 +7,4 @@ AllCops:
     - 'vendor/**/*'
     - 'spec/fixtures/**/*'
     - 'Guardfile'
-    - 'audit_weasel.gemspec'
-    - 'lib/generators/audit_weasel/templates/*'
-    - 'lib/generators/install/templates/*'
+    - 'enum_weasel.gemspec'
