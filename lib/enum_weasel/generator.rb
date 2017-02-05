@@ -1,5 +1,10 @@
 module EnumWeasel
   class Generator
+    attr_writer :configuration
+
+    def initialize(options = {})
+      configure(options)
+    end
 
     def call
       return "pong"
@@ -18,7 +23,20 @@ module EnumWeasel
     end
 
     def to_be_deleted_enum_tables
-      existing_tables.except!(*model_enums.keys)
+      # needs to be coded
+      # existing_tables.except!(*model_enums.keys)
+    end
+
+    def configure(options = {}, &block)
+      configuration.configure(options, &block)
+    end
+
+    def reset_configuration
+      configuration.reset
+    end
+
+    def configuration
+      @configuration ||= Configuration.new
     end
   end
 end

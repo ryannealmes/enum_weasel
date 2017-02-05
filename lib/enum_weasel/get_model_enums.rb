@@ -1,5 +1,10 @@
 module EnumWeasel
   class GetModelEnums
+    attr_reader :prefix
+
+    def initialize prefix
+      @prefix = prefix
+    end
 
     def call
       preload_active_record_models
@@ -35,7 +40,7 @@ module EnumWeasel
       @model_enums ||= {}
 
     def enum_table_name model, enum
-      "enum_weasel_#{model.to_s.underscore.pluralize}_#{enum}"
+      "#{prefix}_#{model.to_s.underscore.pluralize}_#{enum}"
     end
   end
 end
