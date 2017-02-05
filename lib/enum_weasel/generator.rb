@@ -1,14 +1,30 @@
 module EnumWeasel
   class Generator
     attr_writer :configuration
-    
+
     def initialize(options = {})
       configure(options)
     end
 
     def call
-      puts ::ActiveRecord::Base.connection.table_exists?("weasel")
       return "pong"
+    end
+
+    def model_enums
+      @model_enums ||= EnumWeasel::GetModelEnums.new.call
+    end
+
+    def existing_tables
+      @existing_tables ||= ActiveRecord::Base.connection.tables.select { |key, value| key.to_s.match(/^enum/) }
+    end
+
+    def new_enum_tables
+      model_enums.except!(*existing_tables)
+    end
+
+    def to_be_deleted_enum_tables
+      # needs to be coded
+      # existing_tables.except!(*model_enums.keys)
     end
 
     def configure(options = {}, &block)
