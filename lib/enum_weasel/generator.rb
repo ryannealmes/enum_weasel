@@ -10,16 +10,16 @@ module EnumWeasel
       return "pong"
     end
 
+    def create_enum_tables
+      EnumWeasel::Creation.new.call model_enums, existing_tables
+    end
+
     def model_enums
       @model_enums ||= EnumWeasel::GetModelEnums.new.call
     end
 
     def existing_tables
       @existing_tables ||= ActiveRecord::Base.connection.tables.select { |key, value| key.to_s.match(/^enum/) }
-    end
-
-    def new_enum_tables
-      model_enums.except!(*existing_tables)
     end
 
     def to_be_deleted_enum_tables
