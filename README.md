@@ -1,3 +1,13 @@
+
+
+
+<!--[![Gem Version](https://badge.fury.io/rb/audit_weasel.svg)](https://badge.fury.io/rb/audit_weasel)-->
+[![Code Climate](https://codeclimate.com/github/ryannealmes/enum_weasel/badges/gpa.svg)](https://codeclimate.com/github/ryannealmes/enum_weasel)
+[![Build Status](https://travis-ci.org/ryannealmes/enum_weasel.svg?branch=master)](https://travis-ci.org/ryannealmes/enum_weasel.svg)
+[![Test Coverage](https://codeclimate.com/github/ryannealmes/enum_weasel/badges/coverage.svg)](https://codeclimate.com/github/ryannealmes/enum_weasel/coverage)
+[![Dependency Status](https://gemnasium.com/badges/github.com/ryannealmes/enum_weasel.svg)](https://gemnasium.com/github.com/ryannealmes/enum_weasel)
+
+
 # EnumWeasel
 
 Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/enum_weasel`. To experiment with that code, run `bin/console` for an interactive prompt.
