@@ -1,0 +1,12 @@
+require: rubocop-rspec
+
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  Exclude:
+    - 'vendor/**/*'
+    - 'spec/fixtures/**/*'
+    - 'Guardfile'
+    - 'audit_weasel.gemspec'
+    - 'lib/generators/audit_weasel/templates/*'
+    - 'lib/generators/install/templates/*'

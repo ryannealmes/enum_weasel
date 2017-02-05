@@ -6,12 +6,17 @@ require 'enum_weasel/version'
 Gem::Specification.new do |spec|
   spec.name          = "enum_weasel"
   spec.version       = EnumWeasel::VERSION
-  spec.authors       = ["Ryan-Neal Mes"]
-  spec.email         = ["ryan.mes@gmail.com"]
+  spec.authors       = ["Ryan-Neal Mes", "Andrew Tainton"]
+  spec.email         = ["ryan.mes@gmail.com", "atainton@gmail.com"]
 
-  spec.summary       = %q{TODO: Write a short summary, because Rubygems requires one.}
-  spec.description   = %q{TODO: Write a longer description or delete this line.}
-  spec.homepage      = "TODO: Put your gem's website or public repo URL here."
+  spec.summary       = %q{Generates and syncs backing tables for enums on rails 
+  models. Primary purpose is to provide semantic meaning to enums for SQL reports.}
+  spec.description   = %q{Having your enums in code for performance reasons is 
+  great, but if you work with data analytics teams and they write scripts that 
+  use these enums, it helps for them to have a means to determine what values are 
+  associated to what enum values. This gem generates these tables so they can be 
+  joined onto when writing scripts.}
+  spec.homepage      = ""
   spec.license       = "MIT"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
@@ -27,7 +32,13 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_development_dependency "bundler", "~> 1.12"
-  spec.add_development_dependency "rake", "~> 10.0"
-  spec.add_development_dependency "rspec", "~> 3.0"
+  spec.add_development_dependency 'bundler', '~> 1.6'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'sqlite3'
+  spec.add_development_dependency 'guard-rspec'
+  spec.add_development_dependency 'pry'
+  spec.add_development_dependency 'codeclimate-test-reporter'
+  spec.add_development_dependency 'rubocop'
+  spec.add_development_dependency 'rubocop-rspec'
 end
