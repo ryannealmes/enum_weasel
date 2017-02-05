@@ -38,6 +38,7 @@ module EnumWeasel
 
     def model_enums
       @model_enums ||= {}
+    end
 
     def enum_table_name model, enum
       "#{prefix}_#{model.to_s.underscore.pluralize}_#{enum}"
