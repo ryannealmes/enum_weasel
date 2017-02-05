@@ -18,8 +18,10 @@ module EnumWeasel
 
     def configure(options = {}, &block)
       options.each do |key, value| 
+        if value.to_s == ''
+          fail ArgumentError.new "The configuration key [#{key}] cannot be blank" 
+        end
         instance_variable_set("@#{key}", value) 
-        fail ArgumentError.new "The configuration key [#{key}] cannot be blank"
       end
       block.call(self) if block_given?
     end
