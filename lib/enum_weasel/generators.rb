@@ -1,31 +1,53 @@
 module EnumWeasel
   class Generators
-    # def call
-    #   create_new_enum_tables
-    #   delete_old_enum_tables
-    #   update_enum_table_data
-    # end
+    attr_writer :table_creation, 
+      :table_deletion, 
+      :data_creation, 
+      :data_deletion
 
-    # def create_new_enum_tables
-    #   # EnumWeasel::Generator::Tables::Creation.new(model_enums, existing_enum_tables).call 
-    # end
+    def call
+      create_new_enum_tables
+      delete_old_enum_tables
+      update_enum_table_data
+    end
 
-    # def delete_old_enum_tables
-    #   # EnumWeasel::Generator::Tables::Deletion.new(model_enums, existing_enum_tables).call 
-    # end
+    private
 
-    # def update_enum_table_data
-    #   # EnumWeasel::Generator::Data::Creation.new(model_enums, existing_enum_tables).call 
-    #   # EnumWeasel::Generator::Data::Deletion.new(model_enums, existing_enum_tables).call 
-    #   # EnumWeasel::Generator::Data::Update.new(model_enums, existing_enum_tables).call 
-    # end
+    def create_new_enum_tables
+      table_creation.call 
+    end
 
-    # def model_enums
-    #   @model_enums ||= EnumWeasel::GetModelEnums.new.call
-    # end
+    def delete_old_enum_tables
+      table_deletion.call 
+    end
 
-    # def existing_enum_tables
-    #   @existing_enum_tables ||= ActiveRecord::Base.connection.tables.select { |key, value| key.to_s.match(/^enum/) }
-    # end
+    def update_enum_table_data
+      data_creation.call 
+      data_deletion.call 
+    end
+
+    def table_creation
+      @table_creation ||= EnumWeasel::Generators::Tables::Creation.new(model_enums, existing_enum_tables)
+    end
+
+    def table_deletion
+      @table_deletion ||= EnumWeasel::Generators::Tables::Deletion.new(model_enums, existing_enum_tables)
+    end
+
+    def data_creation
+      @data_creation ||= EnumWeasel::Generators::Data::Creation.new(model_enums, existing_enum_tables)
+    end
+    
+    def data_deletion
+      @data_deletion ||= EnumWeasel::Generators::Data::Deletion.new(model_enums, existing_enum_tables)
+    end
+
+    def model_enums
+      @model_enums ||= EnumWeasel::GetModelEnums.new.call
+    end
+
+    def existing_enum_tables
+      @existing_enum_tables ||= ActiveRecord::Base.connection.tables.select { |key, value| key.to_s.match(/^enum/) }
+    end
   end
 end
