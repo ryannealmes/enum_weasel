@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe EnumWeasel::GetAllModelEnums do  
+describe EnumWeasel::GetAllModelEnums do
   before do
     ActiveRecord::Base.establish_connection(adapter: 'sqlite3',
                                             database: ':memory:')
@@ -10,12 +10,12 @@ describe EnumWeasel::GetAllModelEnums do
     Object.send(:remove_const, :Weasel)
 
     ActiveRecord::Schema.define do
-      drop_table :weasels, if_exists: true 
-      drop_table :pandas, if_exists: true 
-    end     
+      drop_table :weasels, if_exists: true
+      drop_table :pandas, if_exists: true
+    end
   end
 
-  it "handles no enums on single model" do
+  it 'no enums on single model' do
     ActiveRecord::Schema.define do
       create_table :weasels do |t|
       end
@@ -23,12 +23,12 @@ describe EnumWeasel::GetAllModelEnums do
 
     class Weasel < ActiveRecord::Base; end
 
-    enums = EnumWeasel::GetAllModelEnums.new.call
+    enums = described_class.new.call
 
-    expect(enums).to eq({})      
+    expect(enums).to eq({})
   end
 
-  it "handles single enum on single model" do
+  it 'single enum on single model' do
     ActiveRecord::Schema.define do
       create_table :weasels do |t|
         t.integer :status
@@ -39,14 +39,12 @@ describe EnumWeasel::GetAllModelEnums do
       enum status: { ping: 1, pong: 2 }
     end
 
-    enums = EnumWeasel::GetAllModelEnums.new.call
+    enums = described_class.new.call
 
-    expect(enums).to eq({
-      "weasel" => ["status"]
-    })      
+    expect(enums).to eq('weasel' => %w(status))
   end
 
-  it "handles multiple enums on single model" do
+  it 'multiple enums on single model' do
     ActiveRecord::Schema.define do
       create_table :weasels do |t|
         t.integer :status
@@ -55,18 +53,16 @@ describe EnumWeasel::GetAllModelEnums do
     end
 
     class Weasel < ActiveRecord::Base
-      enum mood: { happy: 1, angry: 2 }  
+      enum mood: { happy: 1, angry: 2 }
       enum status: { ping: 1, pong: 2 }
     end
 
-    enums = EnumWeasel::GetAllModelEnums.new.call
+    enums = described_class.new.call
 
-    expect(enums).to eq({
-      "weasel" => ["mood", "status"]
-    })     
+    expect(enums).to eq('weasel' => %w(mood status))
   end
 
-  it "handles multiple enums on multiple models" do
+  it 'multiple enums on multiple models' do
     ActiveRecord::Schema.define do
       create_table :weasels do |t|
         t.integer :status
@@ -79,19 +75,16 @@ describe EnumWeasel::GetAllModelEnums do
     end
 
     class Weasel < ActiveRecord::Base
-      enum mood: { happy: 1, angry: 2 }  
+      enum mood: { happy: 1, angry: 2 }
       enum status: { ping: 1, pong: 2 }
     end
 
     class Panda < ActiveRecord::Base
-      enum hunger_level: { will_eat_person: 1, will_eat_bamboo: 2 }  
+      enum hunger_level: { will_eat_person: 1, will_eat_bamboo: 2 }
     end
 
-    enums = EnumWeasel::GetAllModelEnums.new.call
+    enums = described_class.new.call
 
-    expect(enums).to eq({
-      "weasel" => ["mood", "status"],
-      "panda" => ["hunger_level"]
-    })     
+    expect(enums).to eq('weasel' => %w(mood status), 'panda' => %w(hunger_level))
   end
 end

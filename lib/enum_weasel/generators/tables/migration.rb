@@ -1,10 +1,13 @@
 module EnumWeasel
   class Generators
     module Tables
+      # Formats enums to look like table names. This
+      # allows for comparison between existing tables
+      # and model enums
       class Migration
-        attr_reader :model_enums, 
-          :database_enum_tables, 
-          :connection
+        attr_reader :model_enums,
+                    :database_enum_tables,
+                    :connection
 
         def initialize(model_enums, database_enum_tables)
           @model_enums = model_enums
@@ -17,18 +20,18 @@ module EnumWeasel
             run_migration table
           end
         end
-        
+
         def enum_tables
-          fail NotImplementedError
+          raise NotImplementedError
         end
 
         def run_migration table
-          fail NotImplementedError
+          raise NotImplementedError
         end
 
         def formatted_model_enum_names
           formatted_names = []
-          
+
           model_enums.each_key do |model_name|
             model_enums[model_name].each do |enum|
               pluralized_table_name = ActiveSupport::Inflector.pluralize(model_name, :en)

@@ -1,48 +1,60 @@
 require 'spec_helper'
 
-describe EnumWeasel::Generators::Tables::Creation do  
+describe EnumWeasel::Generators::Tables::Creation do
   before do
     ActiveRecord::Base.establish_connection(adapter: 'sqlite3',
                                             database: ':memory:')
   end
 
-  it "creates a single enum reference table" do
-    model_enums = { "weasel" => ["status"] }
+  it 'creates a single enum reference table' do
+    model_enums = { 'weasel' => ['status'] }
 
-    EnumWeasel::Generators::Tables::Creation.new(model_enums, []).call
-    
-    reference_table_exists = ActiveRecord::Base.connection.tables.select { |key, value| key.to_s == "weasels_status_enum" }.any?
+    described_class.new(model_enums, []).call
+
+    reference_table_exists = ActiveRecord::Base.connection.tables.select do |key|
+      key.to_s == 'weasels_status_enum'
+    end.any?
+
     expect(reference_table_exists).to be true
   end
 
-  it "creates multiple enum reference tables for a single model" do
-    model_enums = { "weasel" => ["status", "mood"] }
+  it 'creates multiple enum reference tables for a single model' do
+    model_enums = { 'weasel' => %w(status mood) }
 
-    EnumWeasel::Generators::Tables::Creation.new(model_enums, []).call
-    
-    reference_tables = ActiveRecord::Base.connection.tables.select { |key, value| key =~ /_enum/ }
-    expect(reference_tables).to match_array ["weasels_status_enum", "weasels_mood_enum"]
+    described_class.new(model_enums, []).call
+
+    reference_tables = ActiveRecord::Base.connection.tables.select do |key|
+      key =~ /_enum/
+    end
+
+    expect(reference_tables).to match_array %w(weasels_status_enum weasels_mood_enum)
   end
 
-  it "creates multiple enum reference tables for multiple models" do
+  it 'creates multiple enum reference tables for multiple models' do
     model_enums = {
-      "weasel" => ["status", "mood"],
-      "panda" => ["hunger_level"]
+      'weasel' => %w(status mood),
+      'panda' => ['hunger_level']
     }
 
-    EnumWeasel::Generators::Tables::Creation.new(model_enums, []).call
-    
-    reference_tables = ActiveRecord::Base.connection.tables.select { |key, value| key =~ /_enum/ }
-    expect(reference_tables).to match_array ["weasels_status_enum", "weasels_mood_enum", "pandas_hunger_level_enum"]
+    described_class.new(model_enums, []).call
+
+    reference_tables = ActiveRecord::Base.connection.tables.select do |key|
+      key =~ /_enum/
+    end
+
+    expected = %w(weasels_status_enum weasels_mood_enum pandas_hunger_level_enum)
+    expect(reference_tables).to match_array expected
   end
 
-  it "does not create duplicate tables" do
-    model_enums = { "weasel" => ["status"] }
+  it 'does not create duplicate tables' do
+    model_enums = { 'weasel' => ['status'] }
 
-    EnumWeasel::Generators::Tables::Creation.new(model_enums, []).call
-    EnumWeasel::Generators::Tables::Creation.new(model_enums, []).call
-    
-    reference_table_exists = ActiveRecord::Base.connection.tables.select { |key, value| key.to_s == "weasels_status_enum" }.any?
+    described_class.new(model_enums, []).call
+    described_class.new(model_enums, []).call
+
+    reference_table_exists = ActiveRecord::Base.connection.tables.select do |key| 
+      key.to_s == 'weasels_status_enum' 
+    end.any?
 
     expect(reference_table_exists).to be true
   end

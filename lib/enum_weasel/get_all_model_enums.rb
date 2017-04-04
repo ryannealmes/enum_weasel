@@ -1,4 +1,5 @@
 module EnumWeasel
+  # Pulls all enums from all models
   class GetAllModelEnums
     attr_reader :model_enums
 
@@ -20,7 +21,7 @@ module EnumWeasel
     end
 
     def get_model_enums model
-      model.defined_enums.map{ |key, value| key }
+      model.defined_enums.keys
     end
   end
 end

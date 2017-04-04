@@ -23,3 +23,6 @@ Style/BlockComments:
 Style/TrailingBlankLines:
   Exclude:
     - 'Rakefile'
+
+Rspec/ExampleLength:
+  Max: 20

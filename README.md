@@ -7,6 +7,7 @@
 [![Test Coverage](https://codeclimate.com/github/ryannealmes/enum_weasel/badges/coverage.svg)](https://codeclimate.com/github/ryannealmes/enum_weasel/coverage)
 [![Dependency Status](https://gemnasium.com/badges/github.com/ryannealmes/enum_weasel.svg)](https://gemnasium.com/github.com/ryannealmes/enum_weasel)
 
+# REPO UNDER DEVELOPMENT
 
 # EnumWeasel
 
